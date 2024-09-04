@@ -63,19 +63,19 @@ void setup()
   }
 
   auto outside_temp_metadata =
-      new SKMetadata("K",                   // units
-                     "Outside Temperature", // display name
-                     "Outside Temperature", // description
-                     "Outside Temp",        // short name
-                     10.                    // timeout, in seconds
+      new SKMetadata("K",                                               // units
+                     "Outside Temperature",                             // display name
+                     "Outside Temperature gathered from BMP280 sensor", // description
+                     "Outside Temp",                                    // short name
+                     10.                                                // timeout, in seconds
       );
 
   auto outside_pressure_metadata =
-      new SKMetadata("K",                           // units
-                     "Outside Barometric Pressure", // display name
-                     "Outside Barometric Pressure", // description
-                     "Outside Pressure",            // short name
-                     10.                            // timeout, in seconds
+      new SKMetadata("K",                                                       // units
+                     "Outside Barometric Pressure",                             // display name
+                     "Outside Barometric Pressure gathered from BMP280 sensor", // description
+                     "Outside Pressure",                                        // short name
+                     10.                                                        // timeout, in seconds
       );
 
   // Read the sensor every 2 seconds
