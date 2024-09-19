@@ -45,7 +45,7 @@ void setup()
   SensESPAppBuilder builder;
   sensesp_app = (&builder)
                     // Set a custom hostname for the app.
-                    ->set_hostname("drama-sensesp_outside")
+                    ->set_hostname("drama-sensesp_inside_bmp280")
                     // Optionally, hard-code the WiFi and Signal K server
                     // settings. This is normally not needed.
                     ->set_wifi("drama_network", "sv_drama")
@@ -62,20 +62,20 @@ void setup()
       ;
   }
 
-  auto outside_temp_metadata =
-      new SKMetadata("K",                                               // units
-                     "Outside Temperature",                             // display name
-                     "Outside Temperature gathered from BMP280 sensor", // description
-                     "Outside Temp",                                    // short name
-                     10.                                                // timeout, in seconds
+  auto inside_temp_metadata =
+      new SKMetadata("K",                                              // units
+                     "Inside Temperature",                             // display name
+                     "Inside Temperature gathered from BMP280 sensor", // description
+                     "Inside Temp",                                    // short name
+                     10.                                               // timeout, in seconds
       );
 
-  auto outside_pressure_metadata =
-      new SKMetadata("K",                                                       // units
-                     "Outside Barometric Pressure",                             // display name
-                     "Outside Barometric Pressure gathered from BMP280 sensor", // description
-                     "Outside Pressure",                                        // short name
-                     10.                                                        // timeout, in seconds
+  auto inside_pressure_metadata =
+      new SKMetadata("K",                                                      // units
+                     "Inside Barometric Pressure",                             // display name
+                     "Inside Barometric Pressure gathered from BMP280 sensor", // description
+                     "Inside Pressure",                                        // short name
+                     10.                                                       // timeout, in seconds
       );
 
   // Read the sensor every 2 seconds
@@ -85,17 +85,17 @@ void setup()
   auto *outside_temp =
       new RepeatSensor<float>(read_interval, read_temp_callback);
   // Set the Signal K Path for the output
-  const char *sk_path_temp = "environment.outside.temperature";
+  const char *sk_path_temp = "environment.inside.temperature";
   // Send the temperature to the Signal K server as a Float
-  outside_temp->connect_to(new SKOutputFloat(sk_path_temp, outside_temp_metadata));
+  outside_temp->connect_to(new SKOutputFloat(sk_path_temp, inside_temp_metadata));
 
   // Outside barometric pressure
   auto *outside_barometric_pressure =
       new RepeatSensor<float>(read_interval, read_barometric_pressure_callback);
   // Set the Signal K Path for the output
-  const char *sk_path_pressure = "environment.outside.barometricPressure";
+  const char *sk_path_pressure = "environment.inside.pressure";
   // Send the pressure to the Signal K server as a Float
-  outside_barometric_pressure->connect_to(new SKOutputFloat(sk_path_pressure, outside_pressure_metadata));
+  outside_barometric_pressure->connect_to(new SKOutputFloat(sk_path_pressure, inside_pressure_metadata));
 
   // Start networking, SK server connections and other SensESP internals
   sensesp_app->start();
